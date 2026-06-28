@@ -4609,31 +4609,6 @@ function sendBirthdayWish(id, channel){
 </script>
   <script>
 const SUPABASE_URL = "https://vprujpiivnyxwtkkinhx.supabase.co";
-
-const SUPABASE_KEY = "sb_publishable_WJ6UtwN9O00QLiPBxR86lw_pHd4WrgG";
-
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-console.log("✅ MFJ CRM Connected to Supabase");
-
-</script>
-  <script>
-const SUPABASE_URL = "https://vprujpiivnyxwtkkinhx.supabase.co";
-
-const SUPABASE_KEY = "sb_publishable_WJ6UtwN9O00QLiPBxR86lw_pHd4WrgG";
-
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-console.log("✅ MFJ CRM Connected to Supabase");
-    <script>
-const SUPABASE_URL = "https://vprujpiivnyxwtkkinhx.supabase.co";
-
 const SUPABASE_KEY = "sb_publishable_WJ6UtwN9O00QLiPBxR86lw_pHd4WrgG";
 
 const supabase = window.supabase.createClient(
@@ -4644,21 +4619,20 @@ const supabase = window.supabase.createClient(
 console.log("✅ MFJ CRM Connected to Supabase");
 
 (async () => {
-    try {
-        const { data, error } = await supabase
-            .from("services")
-            .select("*");
+  try {
+    const { data, error } = await supabase
+      .from("services")
+      .select("*");
 
-        if (error) {
-            console.error("Supabase Error:", error);
-        } else {
-            console.log("Services Loaded:", data);
-        }
-    } catch (err) {
-        console.error(err);
+    if (error) {
+      console.error("Supabase Error:", error);
+    } else {
+      console.log("Services Loaded:", data);
     }
+  } catch (err) {
+    console.error(err);
+  }
 })();
-</script>
 </script>
 </body>
 </html>
