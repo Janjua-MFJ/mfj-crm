@@ -1,1 +1,1814 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MFJ Services CRM | Tax & Business Solutions</title>
+<meta name="theme-color" content="#2563EB">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MFJ CRM">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+/* =====================================================
+   PREMIUM SAAS DESIGN SYSTEM — MFJ CRM
+   ===================================================== */
+:root {
+  --primary:#7C3AED; --primary-dark:#6D28D9; --primary-light:#8B5CF6;
+  --primary-ultra:#F5F3FF; --primary-mid:#DDD6FE;
+  --bg:linear-gradient(135deg,#F0F4FF 0%,#FDF4FF 30%,#F0FFF4 60%,#FFFBF0 100%);
+  --bg-solid:#F3F0FF;
+  --surface:#FFFFFF; --surface2:#F5F0FF;
+  --dark:#1E1B4B; --text:#1E1B4B; --text-soft:#4C5080; --text-mute:#9CA3AF;
+  --border:#E0D9F7; --border-soft:#EDE9FF;
+  --success:#10B981; --success-bg:#ECFDF5; --success-border:#A7F3D0;
+  --warning:#F59E0B; --warning-bg:#FFFBEB; --warning-border:#FDE68A;
+  --danger:#EF4444; --danger-bg:#FFF1F2; --danger-border:#FECDD3;
+  --purple:#8B5CF6; --purple-bg:#F5F3FF;
+  --cyan:#06B6D4; --cyan-bg:#ECFEFF;
+  --teal:#14B8A6; --teal-bg:#F0FDFA;
+  --rose:#F43F5E; --rose-bg:#FFF1F3;
+  --orange:#F97316; --orange-bg:#FFF7ED;
+  --indigo:#6366F1; --indigo-bg:#EEF2FF;
+  --shadow-xs:0 1px 2px rgba(124,58,237,.06);
+  --shadow-sm:0 2px 8px rgba(124,58,237,.08), 0 1px 2px rgba(124,58,237,.05);
+  --shadow-md:0 8px 24px rgba(124,58,237,.12), 0 2px 6px rgba(124,58,237,.06);
+  --shadow-lg:0 20px 48px rgba(124,58,237,.16), 0 4px 12px rgba(124,58,237,.08);
+  --shadow-xl:0 32px 64px rgba(124,58,237,.20);
+  --shadow-primary:0 8px 24px rgba(124,58,237,.35);
+  --radius-sm:8px; --radius:12px; --radius-lg:16px; --radius-xl:24px;
+  --sidebar-w:260px;
+  --grad-main:linear-gradient(135deg,#7C3AED,#06B6D4);
+  --grad-teal:linear-gradient(135deg,#14B8A6,#0D9488);
+  --grad-rose:linear-gradient(135deg,#F43F5E,#E11D48);
+  --grad-orange:linear-gradient(135deg,#F97316,#EA580C);
+  --grad-indigo:linear-gradient(135deg,#6366F1,#4F46E5);
+  --grad-cyan:linear-gradient(135deg,#06B6D4,#0891B2);
+}
+/* ══════════════════════════════════════
+   🌙 DARK MODE VARIABLES
+   ══════════════════════════════════════ */
+[data-theme="dark"]{
+  --primary:#A78BFA; --primary-dark:#8B5CF6; --primary-light:#C4B5FD;
+  --primary-ultra:rgba(167,139,250,.12); --primary-mid:rgba(167,139,250,.25);
+  --bg:#0D0B1A; --surface:#16132A; --surface2:#1E1A38;
+  --dark:#F5F3FF; --text:#E9E4FF; --text-soft:#A89FC8; --text-mute:#5B5480;
+  --border:rgba(167,139,250,.15); --border-soft:rgba(167,139,250,.08);
+  --success:#10B981; --success-bg:rgba(16,185,129,.12); --success-border:rgba(16,185,129,.25);
+  --warning:#F59E0B; --warning-bg:rgba(245,158,11,.12); --warning-border:rgba(245,158,11,.25);
+  --danger:#EF4444; --danger-bg:rgba(239,68,68,.12); --danger-border:rgba(239,68,68,.25);
+  --purple:#A78BFA; --purple-bg:rgba(167,139,250,.12);
+  --cyan:#22D3EE; --cyan-bg:rgba(34,211,238,.12);
+  --shadow-xs:0 1px 2px rgba(0,0,0,.4);
+  --shadow-sm:0 2px 8px rgba(0,0,0,.45);
+  --shadow-md:0 8px 24px rgba(0,0,0,.55);
+  --shadow-lg:0 20px 48px rgba(0,0,0,.65);
+  --shadow-xl:0 32px 64px rgba(0,0,0,.75);
+  --shadow-primary:0 8px 24px rgba(167,139,250,.4);
+}
+[data-theme="dark"] body{background:var(--bg);}
+[data-theme="dark"] .topbar{background:rgba(19,25,41,.85);border-bottom-color:rgba(255,255,255,.07);}
+[data-theme="dark"] .sidebar{background:#0D1117;border-left-color:rgba(255,255,255,.04);}
+[data-theme="dark"] .card{background:var(--surface);border-color:rgba(255,255,255,.07);}
+[data-theme="dark"] .kpi{background:var(--surface);border-color:rgba(255,255,255,.07);}
+[data-theme="dark"] .modal-box{background:#131929;border-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .modal-head{background:#131929;border-bottom-color:rgba(255,255,255,.07);}
+[data-theme="dark"] .field input,[data-theme="dark"] .field select,[data-theme="dark"] .field textarea{background:var(--surface2);border-color:rgba(255,255,255,.1);color:var(--text);}
+[data-theme="dark"] .search-bar input,[data-theme="dark"] .search-bar select{background:var(--surface2);border-color:rgba(255,255,255,.1);color:var(--text);}
+[data-theme="dark"] table{background:var(--surface);}
+[data-theme="dark"] thead th{background:#1A2236;}
+[data-theme="dark"] td{border-bottom-color:rgba(255,255,255,.05);}
+[data-theme="dark"] tbody tr:hover td{background:rgba(59,130,246,.08);}
+[data-theme="dark"] .btn-secondary{background:var(--surface2);border-color:rgba(255,255,255,.12);color:var(--text-soft);}
+[data-theme="dark"] .status-sel{background:var(--surface2);border-color:rgba(255,255,255,.12);color:var(--text);}
+[data-theme="dark"] .profile-item{background:var(--surface2);}
+[data-theme="dark"] .doc-chip{background:var(--surface2);border-color:rgba(255,255,255,.1);color:var(--text-soft);}
+[data-theme="dark"] .search-mini{background:var(--surface2);border-color:rgba(255,255,255,.1);}
+[data-theme="dark"] .search-mini input{color:var(--text);}
+[data-theme="dark"] .icon-chip{background:var(--surface2);border-color:rgba(255,255,255,.1);}
+[data-theme="dark"] .profile-chip{background:var(--surface2);border-color:rgba(255,255,255,.1);}
+[data-theme="dark"] .profile-chip span{color:var(--text);}
+[data-theme="dark"] .nav-item{color:rgba(255,255,255,.45);}
+[data-theme="dark"] .nav-item:hover{color:rgba(255,255,255,.85);}
+[data-theme="dark"] .quick-card{background:var(--surface);border-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .template-card{background:var(--surface2);border-color:rgba(255,255,255,.06);}
+[data-theme="dark"] .guide-card{background:var(--surface2);}
+[data-theme="dark"] .report-card{background:var(--surface2);border-color:rgba(255,255,255,.06);}
+[data-theme="dark"] .reminder-item{background:var(--surface2);}
+[data-theme="dark"] .msg-box{background:var(--surface2);}
+[data-theme="dark"] .tree-child{background:var(--surface);border-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .wa-item:hover{background:var(--surface2);}
+[data-theme="dark"] #toast{background:rgba(248,250,252,.95);color:#0F172A;}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#060A14,#0D1F3C);}
 
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Segoe UI','Noto Nastaliq Urdu','Jameel Noori Nastaleeq',system-ui,Tahoma,Arial,sans-serif;
+  background:var(--bg-solid);background-image:linear-gradient(135deg,#F0F4FF 0%,#FDF4FF 30%,#F0FFF4 60%,#FFFBF0 100%);
+  min-height:100vh;
+  color:var(--text);font-size:14.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s ease, color .3s ease;
+}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes popIn{from{opacity:0;transform:scale(.94);}to{opacity:1;transform:scale(1);}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+@keyframes shimmer{0%{background-position:-400px 0;}100%{background-position:400px 0;}}
+@keyframes shimmerSweep{0%{transform:translateX(-150%) skewX(-12deg);}100%{transform:translateX(250%) skewX(-12deg);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+@keyframes spin{to{transform:rotate(360deg);}}
+.fade-up{animation:fadeUp .4s cubic-bezier(.16,1,.3,1) both;}
+.fade-in{animation:fadeIn .3s ease both;}
+
+/* ====================================================
+   🎭 SPECTACULAR LOGIN SCREEN
+   ==================================================== */
+.login-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:#060A14;
+  position:relative;overflow:hidden;
+}
+/* Animated grid background */
+.login-wrap::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(37,99,235,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(37,99,235,.07) 1px,transparent 1px);
+  background-size:50px 50px;
+  animation:gridMove 20s linear infinite;
+}
+@keyframes gridMove{from{transform:translateY(0);}to{transform:translateY(50px);}}
+
+/* Orbs */
+.login-blob{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);}
+.login-blob.b1{
+  width:500px;height:500px;top:-150px;right:-150px;
+  background:radial-gradient(circle,rgba(37,99,235,.25),transparent 70%);
+  animation:orbFloat1 8s ease-in-out infinite;
+}
+.login-blob.b2{
+  width:400px;height:400px;bottom:-100px;left:-100px;
+  background:radial-gradient(circle,rgba(139,92,246,.2),transparent 70%);
+  animation:orbFloat2 10s ease-in-out infinite;
+}
+.login-blob.b3{
+  width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(6,182,212,.1),transparent 70%);
+  animation:orbFloat1 12s ease-in-out infinite reverse;
+}
+@keyframes orbFloat1{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-20px) scale(1.05);}66%{transform:translate(-20px,15px) scale(.95);}}
+@keyframes orbFloat2{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(-25px,20px) scale(1.08);}66%{transform:translate(15px,-10px) scale(.92);}}
+
+/* Stars */
+.login-stars{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.star{
+  position:absolute;border-radius:50%;background:#fff;
+  animation:starTwinkle var(--d,3s) ease-in-out infinite var(--delay,0s);
+}
+@keyframes starTwinkle{0%,100%{opacity:.1;transform:scale(1);}50%{opacity:.8;transform:scale(1.4);}}
+
+/* Glowing ring */
+.login-ring{
+  position:absolute;width:600px;height:600px;border-radius:50%;
+  border:1px solid rgba(37,99,235,.15);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:ringPulse 4s ease-in-out infinite;
+  pointer-events:none;
+}
+.login-ring2{
+  position:absolute;width:800px;height:800px;border-radius:50%;
+  border:1px solid rgba(37,99,235,.07);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:ringPulse 6s ease-in-out infinite reverse;
+  pointer-events:none;
+}
+@keyframes ringPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.03);}}
+
+.login-card{
+  position:relative;width:100%;max-width:420px;z-index:2;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:24px;
+  padding:40px 36px 32px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.05) inset,
+    0 24px 64px rgba(0,0,0,.6),
+    0 0 80px rgba(37,99,235,.12);
+  animation:popIn .6s cubic-bezier(.16,1,.3,1) both;
+}
+/* Top shimmer line */
+.login-card::before{
+  content:'';position:absolute;top:0;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(37,99,235,.8),rgba(139,92,246,.6),transparent);
+  border-radius:1px;
+}
+/* Bottom glow */
+.login-card::after{
+  content:'';position:absolute;bottom:-1px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+}
+.login-brand{text-align:center;margin-bottom:28px;}
+.login-brand .brand-icon{
+  width:72px;height:72px;
+  background:linear-gradient(135deg,#3B82F6,#1D4ED8);
+  border-radius:20px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1) inset,0 8px 32px rgba(37,99,235,.5),0 0 60px rgba(37,99,235,.2);
+  animation:iconFloat 3s ease-in-out infinite;
+  position:relative;
+}
+.login-brand .brand-icon::before{
+  content:'';position:absolute;inset:-2px;border-radius:22px;
+  background:linear-gradient(135deg,rgba(59,130,246,.4),rgba(139,92,246,.2),rgba(37,99,235,.4));
+  z-index:-1;filter:blur(8px);
+  animation:iconGlow 3s ease-in-out infinite;
+}
+@keyframes iconFloat{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-6px) rotate(2deg);}}
+@keyframes iconGlow{0%,100%{opacity:.6;}50%{opacity:1;}}
+
+.login-brand h1{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.login-brand p{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;letter-spacing:.3px;}
+
+.login-dua{
+  background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.2);
+  border-radius:12px;padding:12px 16px;margin-bottom:24px;text-align:center;
+  font-family:'Traditional Arabic','Noto Naskh Arabic',serif;font-size:13px;
+  color:rgba(147,197,253,1);line-height:2.1;
+  box-shadow:0 0 20px rgba(37,99,235,.08) inset;
+}
+
+.login-field{margin-bottom:16px;}
+.login-field label{
+  display:block;font-size:11.5px;font-weight:700;
+  color:rgba(255,255,255,.5);margin-bottom:7px;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.login-field input{
+  width:100%;padding:12px 15px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;
+  background:rgba(255,255,255,.06);
+  color:#fff;font-size:14px;font-family:inherit;
+  transition:all .2s ease;
+}
+.login-field input:focus{
+  outline:none;
+  border-color:rgba(59,130,246,.6);
+  background:rgba(59,130,246,.08);
+  box-shadow:0 0 0 3px rgba(59,130,246,.15),0 0 20px rgba(59,130,246,.1);
+}
+.login-field input::placeholder{color:rgba(255,255,255,.25);}
+.pw-wrap{position:relative;}
+.pw-wrap input{padding-left:42px;}
+.pw-eye{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  cursor:pointer;background:none;border:none;color:rgba(255,255,255,.3);
+  font-size:15px;padding:4px;transition:color .15s;
+}
+.pw-eye:hover{color:rgba(255,255,255,.7);}
+.login-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;font-size:12.5px;}
+.remember-chk{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.45);cursor:pointer;}
+.remember-chk input{accent-color:#3B82F6;width:15px;height:15px;}
+.login-btn{
+  width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;
+  font-family:inherit;font-size:14.5px;font-weight:700;letter-spacing:.3px;
+  background:linear-gradient(135deg,#3B82F6,#1D4ED8);
+  color:#fff;
+  box-shadow:0 4px 20px rgba(37,99,235,.5),0 0 40px rgba(37,99,235,.15);
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  position:relative;overflow:hidden;
+}
+.login-btn::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  transition:left .4s ease;
+}
+.login-btn:hover{
+  transform:translateY(-2px) scale(1.01);
+  box-shadow:0 8px 32px rgba(37,99,235,.65),0 0 60px rgba(37,99,235,.2);
+}
+.login-btn:hover::before{left:100%;}
+.login-btn:active{transform:translateY(0) scale(.98);}
+
+.login-error{
+  display:none;
+  background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);
+  color:#FCA5A5;font-size:12.5px;padding:10px 14px;
+  border-radius:10px;margin-bottom:16px;text-align:center;
+}
+.login-error.show{display:block;animation:fadeIn .25s ease;}
+.login-foot{
+  text-align:center;margin-top:20px;font-size:11px;
+  color:rgba(255,255,255,.2);letter-spacing:.3px;
+}
+
+/* ====================================================
+   APP SHELL
+   ==================================================== */
+.shell{display:none;min-height:100vh;}
+.shell.active{display:flex;}
+
+/* ── Sidebar ── */
+.sidebar{
+  width:var(--sidebar-w);
+  background:linear-gradient(180deg,#1E1B4B 0%,#312E81 40%,#1E3A5F 100%);
+  color:#fff;flex-shrink:0;
+  display:flex;flex-direction:column;padding:20px 12px;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+  border-left:1px solid rgba(255,255,255,.06);
+}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px;}
+.brand-icon-sm{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:var(--shadow-primary);
+}
+.brand-text h1{font-size:14px;font-weight:800;color:#fff;letter-spacing:-.2px;}
+.brand-text p{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px;}
+
+.nav-section{font-size:10px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.8px;text-transform:uppercase;padding:12px 10px 6px;}
+.nav{display:flex;flex-direction:column;gap:2px;flex:1;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-sm);
+  cursor:pointer;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;
+  border:none;background:none;width:100%;text-align:right;font-family:inherit;
+  transition:all .16s ease;position:relative;
+}
+.nav-item .ic{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.nav-item:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);}
+.nav-item.active{background:rgba(37,99,235,.25);color:#fff;}
+.nav-item.active::before{content:'';position:absolute;right:0;top:6px;bottom:6px;width:3px;border-radius:3px;background:var(--primary-light);}
+.nav-badge{margin-right:auto;background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;}
+
+.sidebar-foot{border-top:1px solid rgba(255,255,255,.08);padding-top:12px;margin-top:8px;}
+.owner-card{display:flex;align-items:center;gap:10px;padding:8px 10px;}
+.owner-ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;flex-shrink:0;}
+.owner-info p{font-size:12.5px;font-weight:600;color:#fff;}
+.owner-info span{font-size:10px;color:rgba(255,255,255,.4);}
+.logout-btn{
+  margin-top:8px;width:100%;padding:9px;border-radius:var(--radius-sm);
+  border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);
+  color:#FCA5A5;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;
+  transition:all .16s;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.logout-btn:hover{background:rgba(239,68,68,.18);}
+
+/* ── Main ── */
+.main{flex:1;min-width:0;display:flex;flex-direction:column;overflow-x:hidden;}
+
+/* ── Topbar ── */
+.topbar{
+  background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:12px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:30;gap:14px;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;min-width:0;}
+.menu-btn{display:none;background:none;border:none;font-size:20px;color:var(--text-soft);cursor:pointer;padding:4px;border-radius:8px;}
+.menu-btn:hover{background:var(--surface2);}
+.topbar-title h2{font-size:15px;font-weight:700;color:var(--dark);}
+.topbar-title span{font-size:11.5px;color:var(--text-mute);}
+.topbar-right{display:flex;align-items:center;gap:8px;}
+.search-mini{
+  display:flex;align-items:center;gap:8px;background:var(--surface2);
+  border:1.5px solid var(--border);border-radius:30px;padding:7px 14px;min-width:200px;
+  transition:all .18s;
+}
+.search-mini:focus-within{border-color:var(--primary);background:var(--surface);}
+.search-mini input{border:none;background:none;outline:none;color:var(--text);font-size:13px;font-family:inherit;width:100%;}
+.search-mini input::placeholder{color:var(--text-mute);}
+.date-chip{font-size:11.5px;color:var(--text-soft);background:var(--surface2);border:1px solid var(--border);padding:6px 12px;border-radius:20px;white-space:nowrap;}
+.icon-chip{
+  width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);
+  background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:var(--text-soft);transition:all .18s;
+}
+.icon-chip:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-ultra);}
+.profile-chip{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 5px;border-radius:30px;background:var(--surface2);border:1.5px solid var(--border);cursor:pointer;}
+.profile-chip .ava{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.profile-chip span{font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;}
+
+/* ── Content ── */
+.content{padding:24px;max-width:1400px;width:100%;margin:0 auto;}
+
+/* ====================================================
+   HERO / DASHBOARD HEADER
+   ==================================================== */
+.hero{
+  background:linear-gradient(135deg,var(--dark) 0%,#1E3A5F 100%);
+  border-radius:var(--radius-xl);padding:32px 28px 28px;color:#fff;
+  margin-bottom:24px;position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 10% 50%,rgba(37,99,235,.35) 0%,transparent 50%),
+    radial-gradient(circle at 90% 20%,rgba(59,130,246,.2) 0%,transparent 45%);
+}
+.hero::after{
+  content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+  border:1px solid rgba(255,255,255,.06);border-radius:50%;pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.hero-text .hero-dua{
+  font-family:'Traditional Arabic','Noto Naskh Arabic',serif;
+  font-size:14px;color:rgba(255,255,255,.65);margin-bottom:10px;line-height:2;
+}
+.hero-text h2{font-size:26px;font-weight:800;margin-bottom:6px;letter-spacing:-.4px;}
+.hero-text p{font-size:13px;color:rgba(255,255,255,.65);}
+.hero-tags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.hero-tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:600;}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.hero-btn{
+  padding:9px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;
+  cursor:pointer;font-family:inherit;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+}
+.hero-btn.solid{background:var(--primary-light);color:#fff;box-shadow:0 4px 14px rgba(59,130,246,.4);}
+.hero-btn.solid:hover{background:#2563EB;transform:translateY(-1px);}
+.hero-btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);}
+.hero-btn.ghost:hover{background:rgba(255,255,255,.2);}
+
+/* ====================================================
+   KPI CARDS — MEGA 3D FLOATING
+   ==================================================== */
+
+/* Each KPI floats at different speed/height */
+@keyframes floatCard1{0%,100%{transform:translateY(0px) rotate(-.3deg);}50%{transform:translateY(-12px) rotate(.3deg);}}
+@keyframes floatCard2{0%,100%{transform:translateY(-6px) rotate(.2deg);}50%{transform:translateY(-18px) rotate(-.2deg);}}
+@keyframes floatCard3{0%,100%{transform:translateY(-3px) rotate(-.2deg);}50%{transform:translateY(-15px) rotate(.2deg);}}
+@keyframes floatCard4{0%,100%{transform:translateY(-8px) rotate(.3deg);}50%{transform:translateY(-20px) rotate(-.3deg);}}
+@keyframes floatCard5{0%,100%{transform:translateY(-2px) rotate(-.1deg);}50%{transform:translateY(-14px) rotate(.1deg);}}
+@keyframes floatCard6{0%,100%{transform:translateY(-5px) rotate(.2deg);}50%{transform:translateY(-16px) rotate(-.2deg);}}
+@keyframes floatCard7{0%,100%{transform:translateY(-4px) rotate(-.3deg);}50%{transform:translateY(-13px) rotate(.3deg);}}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:26px;}
+.kpi{
+  background:var(--surface);
+  border:1.5px solid transparent;
+  border-radius:var(--radius-lg);
+  padding:18px 16px 14px;
+  box-shadow:0 8px 24px rgba(15,23,42,.1),0 2px 6px rgba(15,23,42,.06);
+  cursor:default;position:relative;overflow:hidden;
+  transition:box-shadow .3s ease, transform .15s ease;
+  will-change:transform;
+}
+/* Floating animations per child */
+.kpi-grid > .kpi:nth-child(1){animation:floatCard1 4s ease-in-out infinite;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border-color:#C7D2FE;}
+.kpi-grid > .kpi:nth-child(2){animation:floatCard2 5s ease-in-out infinite .3s;background:linear-gradient(135deg,#FFFBEB,#FFF7ED);border-color:#FDE68A;}
+.kpi-grid > .kpi:nth-child(3){animation:floatCard3 4.5s ease-in-out infinite .6s;background:linear-gradient(135deg,#ECFEFF,#F0FDFA);border-color:#A5F3FC;}
+.kpi-grid > .kpi:nth-child(4){animation:floatCard4 5.5s ease-in-out infinite .2s;background:linear-gradient(135deg,#F0FDF4,#ECFDF5);border-color:#A7F3D0;}
+.kpi-grid > .kpi:nth-child(5){animation:floatCard5 4.2s ease-in-out infinite .8s;background:linear-gradient(135deg,#EEF2FF,#FFF1F3);border-color:#C7D2FE;}
+.kpi-grid > .kpi:nth-child(6){animation:floatCard6 4.8s ease-in-out infinite .4s;background:linear-gradient(135deg,#F0FFF4,#ECFDF5);border-color:#6EE7B7;}
+.kpi-grid > .kpi:nth-child(7){animation:floatCard7 5.2s ease-in-out infinite .7s;background:linear-gradient(135deg,#FFF1F3,#FDF2F8);border-color:#FDA4AF;}
+
+/* Shimmer on hover */
+.kpi::after{
+  content:'';position:absolute;top:0;left:0;width:50%;height:100%;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);
+  transform:translateX(-150%) skewX(-12deg);pointer-events:none;
+}
+.kpi:hover{
+  animation:none !important;
+  transform:translateY(-16px) scale(1.04) rotate(0deg) !important;
+  box-shadow:0 24px 56px rgba(15,23,42,.18),0 8px 20px rgba(124,58,237,.15);
+  z-index:10;
+}
+.kpi:hover::after{animation:shimmerSweep .7s ease forwards;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
+.kpi.blue::before,.kpi-grid>.kpi:nth-child(1)::before{background:linear-gradient(90deg,#6366F1,#8B5CF6);}
+.kpi.green::before,.kpi-grid>.kpi:nth-child(4)::before{background:linear-gradient(90deg,#10B981,#34D399);}
+.kpi.amber::before,.kpi-grid>.kpi:nth-child(2)::before{background:linear-gradient(90deg,#F59E0B,#FCD34D);}
+.kpi.red::before{background:linear-gradient(90deg,#EF4444,#F87171);}
+.kpi.purple::before,.kpi-grid>.kpi:nth-child(5)::before{background:linear-gradient(90deg,#8B5CF6,#A78BFA);}
+.kpi.cyan::before,.kpi-grid>.kpi:nth-child(3)::before{background:linear-gradient(90deg,#06B6D4,#22D3EE);}
+.kpi.indigo::before{background:linear-gradient(90deg,#6366F1,#818CF8);}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.kpi-ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.kpi.blue .kpi-ic,.kpi-grid>.kpi:nth-child(1) .kpi-ic{background:rgba(99,102,241,.15);color:#6366F1;}
+.kpi.green .kpi-ic,.kpi-grid>.kpi:nth-child(4) .kpi-ic{background:rgba(16,185,129,.15);color:#059669;}
+.kpi.amber .kpi-ic,.kpi-grid>.kpi:nth-child(2) .kpi-ic{background:rgba(245,158,11,.15);color:#D97706;}
+.kpi.red .kpi-ic{background:rgba(239,68,68,.15);color:#DC2626;}
+.kpi.purple .kpi-ic,.kpi-grid>.kpi:nth-child(5) .kpi-ic{background:rgba(139,92,246,.15);color:#7C3AED;}
+.kpi.cyan .kpi-ic,.kpi-grid>.kpi:nth-child(3) .kpi-ic{background:rgba(6,182,212,.15);color:#0891B2;}
+.kpi.indigo .kpi-ic{background:#EEF2FF;color:#6366F1;}
+.kpi-trend{font-size:11px;font-weight:700;}
+.kpi-label{font-size:11.5px;color:var(--text-mute);font-weight:600;letter-spacing:.2px;margin-bottom:6px;}
+.kpi-val{font-size:28px;font-weight:800;color:var(--dark);letter-spacing:-1px;line-height:1.1;}
+.kpi-sub{font-size:11px;color:var(--text-mute);margin-top:6px;}
+
+/* ====================================================
+   CARDS / SECTIONS
+   ==================================================== */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:20px;margin-bottom:18px;box-shadow:var(--shadow-xs);
+  transition:box-shadow .2s;
+}
+.card:hover{box-shadow:var(--shadow-sm);}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
+.card-title{font-size:14.5px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:8px;}
+.card-subtitle{font-size:12px;color:var(--text-mute);}
+
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.section-head h3{font-size:15px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:8px;}
+
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ====================================================
+   FORMS
+   ==================================================== */
+.row{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap;}
+.field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:180px;}
+.field label{font-size:12px;color:var(--text-soft);font-weight:600;}
+.field input,.field select,.field textarea{
+  padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  font-size:13.5px;font-family:inherit;background:var(--surface);color:var(--text);
+  transition:all .16s ease;width:100%;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--primary);background:var(--surface);
+  box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-mute);}
+.field select{cursor:pointer;}
+textarea{width:100%;resize:vertical;font-family:inherit;}
+
+/* ====================================================
+   BUTTONS
+   ==================================================== */
+.btn{
+  padding:9px 18px;border-radius:var(--radius-sm);font-size:13.5px;cursor:pointer;
+  font-family:inherit;font-weight:600;border:none;transition:all .16s ease;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn-primary{background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));color:#fff;box-shadow:var(--shadow-primary);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(37,99,235,.42);}
+.btn-secondary{background:var(--surface2);border:1.5px solid var(--border);color:var(--text-soft);}
+.btn-secondary:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-ultra);}
+.btn-success{background:var(--success);color:#fff;}
+.btn-success:hover{background:#16A34A;}
+.btn-danger{background:var(--danger-bg);border:1.5px solid var(--danger-border);color:var(--danger);}
+.btn-danger:hover{background:rgba(239,68,68,.15);}
+.btn-sm{padding:6px 12px;font-size:12px;}
+.btn-xs{padding:4px 8px;font-size:11px;border-radius:6px;}
+
+/* ====================================================
+   SEARCH / FILTERS
+   ==================================================== */
+.search-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.search-bar input,.search-bar select{
+  padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  font-size:13.5px;font-family:inherit;background:var(--surface);color:var(--text);
+  transition:border-color .16s;
+}
+.search-bar input{flex:1;min-width:180px;}
+.search-bar input:focus,.search-bar select:focus{outline:none;border-color:var(--primary);}
+
+/* ====================================================
+   DATA TABLE
+   ==================================================== */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px;}
+thead th{position:sticky;top:0;z-index:5;background:var(--surface2);}
+th{text-align:right;padding:12px 14px;color:var(--text-soft);font-weight:700;
+   border-bottom:2px solid var(--border);font-size:11.5px;text-transform:uppercase;letter-spacing:.3px;}
+td{padding:12px 14px;border-bottom:1px solid var(--border-soft);color:var(--text);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tbody tr{transition:background .12s ease;}
+tbody tr:hover td{background:var(--primary-ultra);}
+
+/* ====================================================
+   BADGES & TAGS
+   ==================================================== */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:16px;font-size:11px;font-weight:700;letter-spacing:.2px;white-space:nowrap;}
+.badge-pending{background:var(--warning-bg);color:#92400E;border:1px solid var(--warning-border);}
+.badge-progress{background:var(--primary-ultra);color:var(--primary-dark);border:1px solid var(--primary-mid);}
+.badge-done{background:var(--success-bg);color:#166534;border:1px solid var(--success-border);}
+.badge-paid{background:#F0FDF4;color:#14532D;border:1px solid #BBF7D0;}
+.badge-documents{background:var(--purple-bg);color:#4C1D95;border:1px solid #DDD6FE;}
+.badge-submitted{background:var(--cyan-bg);color:#0C4A6E;border:1px solid #A5F3FC;}
+.status-sel{font-size:12px;border-radius:16px;padding:4px 10px;border:1.5px solid var(--border);font-family:inherit;background:var(--surface);color:var(--text);cursor:pointer;font-weight:600;}
+.cat-tag{font-size:10.5px;padding:2px 8px;border-radius:6px;background:var(--primary-ultra);color:var(--primary);font-weight:600;border:1px solid var(--primary-mid);}
+
+/* ====================================================
+   ACTION BUTTONS
+   ==================================================== */
+.action-cluster{display:flex;gap:4px;flex-wrap:nowrap;}
+.icon-btn{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .14s;flex-shrink:0;}
+.icon-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-xs);}
+.icon-btn.wa{color:var(--success);border-color:rgba(34,197,94,.3);}
+.icon-btn.wa:hover{background:var(--success-bg);}
+.icon-btn.call{color:var(--primary);border-color:rgba(37,99,235,.3);}
+.icon-btn.call:hover{background:var(--primary-ultra);}
+.icon-btn.view{color:var(--purple);border-color:rgba(139,92,246,.3);}
+.icon-btn.view:hover{background:var(--purple-bg);}
+.icon-btn.edit{color:var(--text-soft);border-color:var(--border);}
+.icon-btn.edit:hover{color:var(--primary);border-color:var(--primary-mid);background:var(--primary-ultra);}
+.icon-btn.del{color:var(--danger);border-color:rgba(239,68,68,.3);}
+.icon-btn.del:hover{background:var(--danger-bg);}
+.icon-btn.tree{color:var(--cyan);border-color:rgba(6,182,212,.3);}
+.icon-btn.tree:hover{background:var(--cyan-bg);}
+
+/* ====================================================
+   MODAL
+   ==================================================== */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:90;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.modal-overlay.show{display:flex;animation:fadeIn .2s ease;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);max-width:780px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-xl);animation:popIn .25s cubic-bezier(.16,1,.3,1);}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:5;}
+.modal-head h3{font-size:16px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:10px;}
+.modal-close{background:var(--surface2);border:1px solid var(--border);color:var(--text-soft);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;transition:all .15s;}
+.modal-close:hover{color:var(--danger);border-color:var(--danger-border);background:var(--danger-bg);}
+.modal-body{padding:20px 22px;}
+
+.profile-avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.profile-avatar{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;flex-shrink:0;}
+.profile-name h4{font-size:17px;font-weight:700;color:var(--dark);}
+.profile-name span{font-size:12px;color:var(--text-mute);}
+.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+.profile-item{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 13px;border:1px solid var(--border-soft);}
+.profile-item label{font-size:10px;color:var(--text-mute);font-weight:700;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:3px;}
+.profile-item div{font-size:13.5px;color:var(--dark);font-weight:600;word-break:break-word;}
+.profile-section-title{font-size:11.5px;font-weight:700;color:var(--primary);margin:16px 0 10px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.4px;}
+
+/* ====================================================
+   CHECKLIST / TIMELINE
+   ==================================================== */
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+.doc-chip{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:12.5px;color:var(--text-soft);font-weight:600;transition:all .14s;font-family:inherit;}
+.doc-chip.checked{border-color:var(--success);background:var(--success-bg);color:#15803D;}
+.doc-chip .dot{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.doc-chip.checked .dot{background:var(--success);border-color:var(--success);color:#fff;}
+.timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:12px;padding-bottom:14px;position:relative;}
+.timeline-item::before{content:'';position:absolute;right:5px;top:16px;bottom:0;width:1.5px;background:var(--border);}
+.timeline-item:last-child::before{display:none;}
+.timeline-dot{width:12px;height:12px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:3px;box-shadow:0 0 0 3px rgba(37,99,235,.15);}
+.timeline-text{font-size:13px;color:var(--text);}
+.timeline-date{font-size:11px;color:var(--text-mute);margin-top:2px;}
+
+/* ====================================================
+   MISC
+   ==================================================== */
+.msg-box{background:var(--surface2);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;font-size:13.5px;color:var(--text-soft);border-right:3px solid var(--primary);line-height:1.7;}
+.notice{background:var(--primary-ultra);color:var(--primary-dark);border:1px solid var(--primary-mid);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.empty{text-align:center;padding:3rem 1rem;color:var(--text-mute);font-size:14px;}
+.empty .ic{font-size:36px;display:block;margin-bottom:12px;opacity:.4;}
+.empty p{color:var(--text-mute);}
+
+.wa-item{border-bottom:1px solid var(--border-soft);padding:12px 4px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;transition:background .12s;}
+.wa-item:hover{background:var(--surface2);}
+.wa-item:last-child{border-bottom:none;}
+.wa-link{font-size:12.5px;color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--success),#16A34A);padding:6px 14px;border-radius:16px;white-space:nowrap;font-weight:600;box-shadow:0 3px 10px rgba(34,197,94,.3);transition:all .15s;}
+.wa-link:hover{transform:translateY(-1px);}
+.tag-btn{background:var(--surface2);border:1.5px solid var(--border);color:var(--primary);border-radius:16px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .14s;}
+.tag-btn:hover{background:var(--primary-ultra);border-color:var(--primary-mid);}
+
+/* ── Bulk client row ── */
+.bulk-row{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-bottom:1px solid var(--border-soft);transition:background .12s;cursor:pointer;
+}
+.bulk-row:last-child{border-bottom:none;}
+.bulk-row:hover{background:var(--primary-ultra);}
+.bulk-row.selected{background:rgba(37,99,235,.06);}
+.bulk-chk{width:18px;height:18px;accent-color:var(--primary);cursor:pointer;flex-shrink:0;}
+.bulk-name{font-size:13px;font-weight:700;color:var(--dark);flex:1;}
+.bulk-num{font-size:11.5px;color:var(--text-mute);}
+.bulk-sent{font-size:11px;color:var(--success);font-weight:700;margin-right:auto;}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;}
+.guide-card{background:var(--surface2);border-radius:var(--radius);padding:16px;border:1px solid var(--border-soft);transition:all .2s;}
+.guide-card:hover{border-color:var(--primary-mid);transform:translateY(-2px);}
+.guide-num{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;margin-bottom:10px;}
+.guide-card h4{font-size:13.5px;font-weight:700;margin-bottom:6px;color:var(--dark);}
+.guide-card p{font-size:12.5px;color:var(--text-soft);line-height:1.7;}
+
+/* ── Templates ── */
+.template-card{background:var(--surface2);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border-soft);cursor:pointer;transition:all .16s;margin-bottom:10px;}
+.template-card:hover{border-color:var(--primary-mid);box-shadow:var(--shadow-xs);}
+.template-label{font-size:10.5px;color:var(--text-mute);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;display:block;}
+
+/* ── Quick Actions ── */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
+.quick-card{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);
+  padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;font-family:inherit;
+}
+.quick-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--primary-mid);background:var(--primary-ultra);}
+.quick-ic{font-size:22px;margin-bottom:8px;}
+.quick-card span{font-size:12.5px;font-weight:600;color:var(--text);}
+
+/* ── Reminder ── */
+.reminder-item{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--surface2);border-radius:var(--radius-sm);margin-bottom:8px;border-right:3px solid var(--warning);}
+.reminder-item.overdue{border-right-color:var(--danger);}
+.reminder-name{font-size:13px;font-weight:700;color:var(--dark);}
+.reminder-date{font-size:11.5px;color:var(--text-mute);}
+
+/* ── Reports ── */
+.report-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
+.report-card{background:var(--surface2);border:1px solid var(--border-soft);border-radius:var(--radius);padding:16px;transition:all .2s;}
+.report-card:hover{border-color:var(--primary-mid);transform:translateY(-2px);}
+.report-card h4{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.report-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-soft);padding:5px 0;border-bottom:1px solid var(--border-soft);}
+.report-row:last-child{border-bottom:none;}
+.report-row b{color:var(--primary);font-weight:700;}
+
+/* ── Rev bars ── */
+.rev-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.rev-bar-label{font-size:12px;color:var(--text-soft);width:90px;flex-shrink:0;}
+.rev-bar-track{flex:1;height:8px;background:var(--surface2);border-radius:8px;overflow:hidden;}
+.rev-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));border-radius:8px;transition:width .5s ease;}
+.rev-bar-val{font-size:12px;color:var(--primary);font-weight:700;width:80px;text-align:left;flex-shrink:0;}
+
+/* ── Password field ── */
+.pw-field-wrap{display:flex;gap:6px;}
+.pw-field-wrap input{flex:1;}
+.pw-action-btn{background:var(--surface2);border:1.5px solid var(--border);color:var(--text-soft);border-radius:var(--radius-sm);padding:0 12px;cursor:pointer;font-size:13px;flex-shrink:0;transition:all .15s;}
+.pw-action-btn:hover{border-color:var(--primary);color:var(--primary);}
+.pw-masked{font-family:monospace;letter-spacing:1px;}
+
+/* ── Collapsible ── */
+.collapsible-head{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0;user-select:none;}
+.collapsible-head .chev{transition:transform .2s;color:var(--text-mute);}
+.collapsible-head.open .chev{transform:rotate(90deg);}
+.collapsible-body{display:none;padding-top:12px;}
+.collapsible-body.open{display:block;}
+
+/* ====================================================
+   REFERRAL TREE
+   ==================================================== */
+.referral-tree{padding:8px 0;}
+.tree-node{margin-bottom:6px;}
+.tree-main{
+  display:flex;align-items:center;gap:10px;padding:12px 16px;
+  background:linear-gradient(135deg,var(--primary-ultra),var(--primary-mid));
+  border:1.5px solid var(--primary-mid);border-radius:var(--radius);
+  cursor:pointer;transition:all .15s;
+}
+.tree-main:hover{box-shadow:var(--shadow-sm);}
+.tree-main-icon{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.tree-main-text{flex:1;}
+.tree-main-name{font-size:13.5px;font-weight:700;color:var(--dark);}
+.tree-main-sub{font-size:11px;color:var(--text-mute);}
+.tree-main-badge{background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.tree-children{margin-right:24px;margin-top:4px;border-right:2px dashed var(--primary-mid);padding-right:16px;}
+.tree-child{
+  display:flex;align-items:center;gap:10px;padding:9px 14px;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+  margin-bottom:4px;position:relative;transition:all .15s;
+}
+.tree-child::before{content:'—';position:absolute;right:-20px;color:var(--primary-mid);font-size:14px;}
+.tree-child:hover{border-color:var(--primary-mid);background:var(--primary-ultra);}
+.tree-child-icon{width:28px;height:28px;border-radius:50%;background:var(--surface2);color:var(--text-soft);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;border:1px solid var(--border);}
+.tree-child-text{flex:1;}
+.tree-child-name{font-size:13px;font-weight:600;color:var(--dark);}
+.tree-child-sub{font-size:11px;color:var(--text-mute);}
+
+/* ====================================================
+   CHARTS (CSS-based)
+   ==================================================== */
+.chart-wrap{width:100%;overflow:hidden;}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:140px;padding-bottom:24px;position:relative;}
+.bar-chart::after{content:'';position:absolute;bottom:24px;left:0;right:0;height:1px;background:var(--border);}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:default;}
+.bar-fill{width:100%;background:linear-gradient(180deg,var(--primary-light),var(--primary-dark));border-radius:4px 4px 0 0;min-height:4px;transition:height .5s cubic-bezier(.16,1,.3,1);position:relative;}
+.bar-fill:hover{opacity:.85;}
+.bar-val{font-size:10px;font-weight:700;color:var(--primary);white-space:nowrap;}
+.bar-lbl{font-size:10px;color:var(--text-mute);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.pie-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.pie-legend{display:flex;flex-direction:column;gap:8px;flex:1;min-width:130px;}
+.pie-leg-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-soft);}
+.pie-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.pie-leg-pct{font-weight:700;color:var(--dark);margin-right:auto;}
+
+/* ====================================================
+   OVERLAY / TOAST
+   ==================================================== */
+.overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:39;}
+.overlay.show{display:block;animation:fadeIn .2s ease;}
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--dark);color:#fff;border:1px solid rgba(255,255,255,.12);
+  padding:12px 22px;border-radius:30px;font-size:13.5px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all .3s ease;z-index:100;
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ====================================================
+   INSTALL BUTTON
+   ==================================================== */
+.install-btn{
+  display:none;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--primary-mid);background:var(--primary-ultra);color:var(--primary);
+  font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;
+}
+.install-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+/* ====================================================
+   RESPONSIVE
+   ==================================================== */
+@media (max-width:1024px){
+  .kpi-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media (max-width:768px){
+  .sidebar{position:fixed;z-index:50;transform:translateX(110%);box-shadow:var(--shadow-xl);}
+  .sidebar.open{transform:translateX(0);}
+  .menu-btn{display:flex;}
+  .content{padding:16px;}
+  .topbar{padding:10px 16px;}
+  .date-chip,.search-mini{display:none;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .kpi-val{font-size:22px;}
+  .hero{padding:22px 18px;}
+  .hero-inner{flex-direction:column;}
+  .hero-text h2{font-size:20px;}
+  .profile-chip span{display:none;}
+  .profile-grid{grid-template-columns:1fr;}
+}
+@media (max-width:480px){
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+  .row{gap:10px;}
+  .field{min-width:100%;}
+  .login-card{padding:28px 20px;}
+}
+/* ── Media Library ── */
+.media-upload-zone{border:2.5px dashed var(--border);border-radius:var(--radius);padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2);margin-bottom:18px;}
+.media-upload-zone:hover,.media-upload-zone.drag-over{border-color:var(--primary);background:var(--primary-pale);}
+.media-upload-zone .upload-icon{font-size:42px;margin-bottom:10px;}
+.media-upload-zone p{font-size:14px;color:var(--text-soft);margin-bottom:6px;}
+.media-upload-zone small{font-size:12px;color:var(--text-mute);}
+.media-filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.media-filter-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);color:var(--text-soft);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .16s;}
+.media-filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
+.media-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative;box-shadow:var(--shadow-xs);transition:all .2s;cursor:pointer;}
+.media-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:var(--primary-mid);}
+.media-thumb{width:100%;height:130px;object-fit:cover;display:block;background:var(--surface2);}
+.media-thumb-video{width:100%;height:130px;background:#0B0B18;display:flex;align-items:center;justify-content:center;font-size:42px;color:#fff;}
+.media-thumb-doc{width:100%;height:130px;background:var(--primary-pale);display:flex;align-items:center;justify-content:center;font-size:42px;}
+.media-info{padding:10px 12px;}
+.media-name{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.media-meta{font-size:10.5px;color:var(--text-mute);margin-top:3px;}
+.media-actions{display:flex;gap:6px;padding:0 10px 10px;}
+.media-act-btn{flex:1;padding:6px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text-soft);font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;text-align:center;}
+.media-act-btn:hover{border-color:var(--primary);color:var(--primary);}
+.media-act-btn.del:hover{border-color:var(--danger);color:var(--danger);}
+.media-del-btn{position:absolute;top:7px;left:7px;width:26px;height:26px;border-radius:50%;background:rgba(239,68,68,.85);color:#fff;border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;}
+.media-item:hover .media-del-btn{opacity:1;}
+.media-empty{text-align:center;padding:48px 20px;color:var(--text-mute);}
+.media-empty .ic{font-size:52px;display:block;margin-bottom:14px;}
+.media-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+.media-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;font-size:13px;color:var(--text-soft);display:flex;align-items:center;gap:8px;}
+.media-stat b{font-size:18px;font-weight:800;color:var(--primary);}
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:300;align-items:center;justify-content:center;padding:20px;}
+.lightbox.open{display:flex;animation:fadeIn .2s ease;}
+.lightbox-inner{position:relative;max-width:90vw;max-height:88vh;border-radius:14px;overflow:hidden;}
+.lightbox-inner img{max-width:90vw;max-height:80vh;object-fit:contain;display:block;border-radius:10px;}
+.lightbox-inner video{max-width:90vw;max-height:80vh;border-radius:10px;}
+.lightbox-close{position:fixed;top:18px;left:18px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.lightbox-close:hover{background:rgba(239,68,68,.7);}
+
+/* =====================================================
+   MFJ LOGO SPLASH SCREEN
+   ===================================================== */
+#splashScreen{
+  position:fixed;inset:0;z-index:9999;background:#060A14;
+  display:none;align-items:center;justify-content:center;flex-direction:column;
+  overflow:hidden;
+}
+#splashScreen.hide{animation:splashFadeOut .6s ease forwards;}
+@keyframes splashFadeOut{to{opacity:0;pointer-events:none;}}
+.splash-logo-wrap{position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.splash-ring{
+  position:absolute;width:180px;height:180px;border-radius:50%;
+  border:2px solid rgba(37,99,235,.4);
+  animation:splashRing 1.8s ease-in-out infinite;
+}
+.splash-ring2{
+  position:absolute;width:230px;height:230px;border-radius:50%;
+  border:1px solid rgba(37,99,235,.15);
+  animation:splashRing 2.4s ease-in-out infinite .3s;
+}
+@keyframes splashRing{0%{transform:scale(.85);opacity:0;}50%{opacity:1;}100%{transform:scale(1.15);opacity:0;}}
+.splash-icon{
+  width:120px;height:120px;border-radius:32px;
+  background:linear-gradient(135deg,#3B82F6,#1D4ED8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:52px;position:relative;z-index:2;
+  box-shadow:0 0 60px rgba(37,99,235,.6),0 0 120px rgba(37,99,235,.2);
+  animation:splashIconAnim 1s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes splashIconAnim{from{transform:scale(.5) rotate(-10deg);opacity:0;}to{transform:scale(1) rotate(0deg);opacity:1;}}
+.splash-name{
+  font-size:36px;font-weight:900;color:#fff;letter-spacing:2px;
+  margin-top:24px;text-align:center;
+  animation:splashTextAnim .8s ease both .4s;
+}
+.splash-sub{
+  font-size:13px;color:rgba(255,255,255,.4);letter-spacing:3px;text-transform:uppercase;
+  margin-top:8px;text-align:center;
+  animation:splashTextAnim .8s ease both .6s;
+}
+@keyframes splashTextAnim{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.splash-bar-wrap{margin-top:40px;width:200px;animation:splashTextAnim .6s ease both .8s;}
+.splash-bar-track{height:3px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
+.splash-bar-fill{height:100%;background:linear-gradient(90deg,#3B82F6,#8B5CF6);border-radius:3px;width:0%;transition:width 2s ease;}
+
+/* =====================================================
+   VOICE INPUT BUTTON
+   ===================================================== */
+.voice-btn{
+  width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);
+  background:var(--surface2);cursor:pointer;font-size:15px;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:all .16s;flex-shrink:0;margin-right:4px;
+}
+.voice-btn:hover{border-color:var(--primary);background:var(--primary-ultra);}
+.voice-btn.listening{border-color:#EF4444;background:#FFF1F2;animation:voicePulse .8s ease-in-out infinite;}
+@keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4);}50%{box-shadow:0 0 0 8px rgba(239,68,68,.0);}}
+.voice-bar{
+  display:none;align-items:center;gap:8px;background:var(--danger-bg);
+  border:1px solid var(--danger-border);border-radius:var(--radius-sm);
+  padding:8px 14px;margin-bottom:10px;font-size:13px;color:var(--danger);font-weight:600;
+}
+.voice-bar.show{display:flex;}
+.voice-dot{width:8px;height:8px;border-radius:50%;background:var(--danger);animation:voicePulse .6s ease-in-out infinite;}
+
+/* =====================================================
+   CAMERA SCAN MODAL
+   ===================================================== */
+.cam-modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.7);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
+.cam-modal.show{display:flex;animation:fadeIn .2s ease;}
+.cam-box{background:var(--surface);border-radius:var(--radius-xl);max-width:520px;width:100%;overflow:hidden;box-shadow:var(--shadow-xl);}
+.cam-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+.cam-head h3{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.cam-body{padding:20px;}
+#camPreview{width:100%;max-height:300px;border-radius:var(--radius);background:#000;display:block;}
+.cam-capture-btn{
+  margin-top:14px;width:100%;padding:12px;border-radius:var(--radius-sm);border:none;
+  background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));color:#fff;
+  font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+  box-shadow:var(--shadow-primary);transition:all .2s;
+}
+.cam-capture-btn:hover{transform:translateY(-1px);}
+.cam-canvas{display:none;}
+.cam-status{margin-top:12px;font-size:13px;color:var(--text-soft);text-align:center;min-height:20px;}
+.cam-upload-alt{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;color:var(--text-mute);}
+.cam-upload-alt label{color:var(--primary);font-weight:600;cursor:pointer;text-decoration:underline;}
+
+/* PDF generation styles */
+.pdf-btn{background:var(--success-bg);border:1.5px solid var(--success-border);color:#15803D;border-radius:var(--radius-sm);padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.pdf-btn:hover{background:var(--success);color:#fff;}
+.wa-share-btn{background:#25D366;color:#fff;border:none;border-radius:var(--radius-sm);padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.wa-share-btn:hover{background:#128C7E;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     MFJ SPLASH SCREEN
+     ══════════════════════════════════════════════════ -->
+<div id="splashScreen">
+  <div class="splash-logo-wrap">
+    <div class="splash-ring"></div>
+    <div class="splash-ring2"></div>
+    <div class="splash-icon">📊</div>
+  </div>
+  <div class="splash-name">MFJ Services</div>
+  <div class="splash-sub">Tax &amp; Business Solutions CRM</div>
+  <div class="splash-bar-wrap">
+    <div class="splash-bar-track">
+      <div class="splash-bar-fill" id="splashBar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     LOGIN SCREEN — ANIMATED LOGO
+     ══════════════════════════════════════════════════ -->
+<div class="login-wrap" id="loginScreen" style="display:none;">
+  <div class="login-blob b1"></div>
+  <div class="login-blob b2"></div>
+  <div class="login-blob b3"></div>
+  <div class="login-ring"></div>
+  <div class="login-ring2"></div>
+  <div class="login-stars" id="loginStars"></div>
+
+  <!-- LOGO INTRO (shown first, click to get password) -->
+  <div id="logoIntro" style="display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;position:relative;">
+    <div id="mfjLogoCircle" onclick="showPasswordBox()" style="
+      width:160px;height:160px;border-radius:50%;
+      background:linear-gradient(135deg,#7C3AED,#06B6D4,#10B981,#F97316);
+      background-size:300% 300%;
+      animation:gradientShift 4s ease infinite, logoJump 1.2s cubic-bezier(.36,.07,.19,.97) both;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      box-shadow:0 0 60px rgba(124,58,237,.6), 0 0 120px rgba(6,182,212,.3);
+      position:relative;
+    ">
+      <div style="
+        width:130px;height:130px;border-radius:50%;
+        background:rgba(0,0,0,.45);
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        color:#fff;font-weight:900;letter-spacing:2px;
+      ">
+        <span style="font-size:36px;font-weight:900;line-height:1;">MFJ</span>
+        <span style="font-size:10px;opacity:.7;letter-spacing:3px;margin-top:3px;">SERVICES</span>
+      </div>
+    </div>
+    <p style="color:rgba(255,255,255,.5);font-size:13px;margin-top:20px;letter-spacing:.5px;animation:fadeIn 1s 1s both;">لاگ ان کرنے کے لیے کلک کریں</p>
+  </div>
+
+  <!-- PASSWORD BOX (hidden until logo clicked) -->
+  <div id="passwordBox" style="display:none;z-index:10;position:relative;width:100%;max-width:380px;">
+    <div class="login-card" style="animation:popIn .4s cubic-bezier(.16,1,.3,1) both;">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#06B6D4);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:18px;box-shadow:0 0 30px rgba(124,58,237,.5);">MFJ</div>
+        <h1 style="font-size:20px;font-weight:800;color:#fff;">MFJ Services CRM</h1>
+        <p style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;">پاس ورڈ درج کریں</p>
+      </div>
+      <div class="login-dua" style="margin-bottom:18px;">﷽ اللّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ</div>
+      <div id="loginError" class="login-error">⚠ پاس ورڈ غلط ہے</div>
+      <div class="login-field" id="loginUserField">
+        <label>صارف نام</label>
+        <input type="text" id="loginUser" placeholder="Username" autocomplete="username">
+      </div>
+      <div class="login-field">
+        <label>پاس ورڈ</label>
+        <div class="pw-wrap">
+          <button class="pw-eye" type="button" id="pwEye" onclick="togglePw()">👁</button>
+          <input type="password" id="loginPass" placeholder="Password درج کریں" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+      </div>
+      <div class="login-row">
+        <label class="remember-chk"><input type="checkbox" id="rememberMe"> مجھے یاد رکھیں</label>
+      </div>
+      <button class="login-btn" onclick="doLogin()">🔓 &nbsp; لاگ ان کریں</button>
+      <div class="login-foot">MFJ Services © 2025 &nbsp;•&nbsp; Professional CRM</div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes gradientShift{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+@keyframes logoJump{
+  0%{transform:translateY(-200px) scale(.3);opacity:0;}
+  60%{transform:translateY(20px) scale(1.08);opacity:1;}
+  80%{transform:translateY(-10px) scale(.97);}
+  100%{transform:translateY(0) scale(1);}
+}
+</style>
+
+<!-- ══════════════════════════════════════════════════
+     CAMERA SCAN MODAL
+     ══════════════════════════════════════════════════ -->
+<div class="cam-modal" id="camModal">
+  <div class="cam-box">
+    <div class="cam-head">
+      <h3>📷 CNIC اسکین کریں</h3>
+      <button class="modal-close" onclick="closeCamModal()">✕</button>
+    </div>
+    <div class="cam-body">
+      <video id="camPreview" autoplay playsinline muted></video>
+      <canvas id="camCanvas" class="cam-canvas"></canvas>
+      <button class="cam-capture-btn" id="camCaptureBtn" onclick="capturePhoto()">📸 تصویر لیں اور معلومات نکالیں</button>
+      <div class="cam-status" id="camStatus"></div>
+      <div class="cam-upload-alt">
+        <span>یا</span>
+        <label>
+          <input type="file" accept="image/*" style="display:none" onchange="handleCamFileUpload(event)">
+          گیلری سے تصویر منتخب کریں
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     APP SHELL
+     ══════════════════════════════════════════════════ -->
+<div class="shell" id="appShell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon-sm" style="background:linear-gradient(135deg,#7C3AED,#06B6D4,#10B981);border-radius:50%;font-weight:900;font-size:13px;letter-spacing:1px;">MFJ</div>
+      <div class="brand-text">
+        <h1>MFJ CRM</h1>
+        <p>Tax & Business Solutions</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <span class="nav-section">مین مینو</span>
+      <button class="nav-item active" onclick="showTabByName('dashboard')" id="nav-dashboard">
+        <span class="ic">🏠</span> ڈیش بورڈ
+      </button>
+      <button class="nav-item" onclick="showTabByName('clients')" id="nav-clients">
+        <span class="ic">👥</span> تمام کلائنٹس
+        <span class="nav-badge" id="navClientCount">0</span>
+      </button>
+      <button class="nav-item" onclick="showTabByName('add')" id="nav-add">
+        <span class="ic">➕</span> نیا کلائنٹ
+      </button>
+
+      <span class="nav-section">ریفرل سسٹم</span>
+      <button class="nav-item" onclick="showTabByName('referral')" id="nav-referral">
+        <span class="ic">🌳</span> ریفرل نیٹ ورک
+      </button>
+      <button class="nav-item" onclick="showTabByName('referral-tree')" id="nav-referral-tree">
+        <span class="ic">🔗</span> ریفرل ٹری ویو
+      </button>
+
+      <span class="nav-section">ٹولز</span>
+      <button class="nav-item" onclick="showTabByName('msg')" id="nav-msg">
+        <span class="ic">💬</span> WhatsApp میسیج
+      </button>
+      <button class="nav-item" onclick="showTabByName('invoice')" id="nav-invoice">
+        <span class="ic">🧾</span> Invoice / رسید
+      </button>
+      <button class="nav-item" onclick="showTabByName('analytics')" id="nav-analytics">
+        <span class="ic">📈</span> Analytics
+      </button>
+      <button class="nav-item" onclick="showTabByName('reports')" id="nav-reports">
+        <span class="ic">📋</span> رپورٹس
+      </button>
+      <button class="nav-item" onclick="showTabByName('followup')" id="nav-followup">
+        <span class="ic">🔔</span> فالو اپ
+      </button>
+      <button class="nav-item" onclick="showTabByName('birthdays')" id="nav-birthdays">
+        <span class="ic">🎂</span> سالگرہ
+      </button>
+
+      <span class="nav-section">ترتیبات</span>
+      <button class="nav-item" onclick="showTabByName('media')" id="nav-media">
+        <span class="ic">🖼️</span> میڈیا لائبریری
+      </button>
+      <button class="nav-item" onclick="showTabByName('data')" id="nav-data">
+        <span class="ic">💾</span> ڈیٹا مینجمنٹ
+      </button>
+      <button class="nav-item" onclick="showTabByName('settings')" id="nav-settings">
+        <span class="ic">⚙️</span> ترتیبات
+      </button>
+      <button class="nav-item" onclick="showTabByName('portal')" id="nav-portal">
+        <span class="ic">🌐</span> کلائنٹ پورٹل
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="owner-card">
+        <div class="owner-ava">M</div>
+        <div class="owner-info">
+          <p>MFJ Services</p>
+          <span>Tax Consultant</span>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">🚪 لاگ آؤٹ</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+        <div class="topbar-title">
+          <h2 id="pageTitle">ڈیش بورڈ</h2>
+          <span id="dateChip">آج</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-mini">
+          <span>🔍</span>
+          <input type="text" placeholder="کلائنٹ تلاش کریں..." id="globalSearch" oninput="globalSearchFn()">
+        </div>
+        <button class="install-btn" id="installBtn" onclick="installPWA()">📲 Install</button>
+        <button class="icon-chip" onclick="toggleTheme()" id="themeToggle" title="Theme">☀️</button>
+        <div class="profile-chip">
+          <div class="ava">M</div>
+          <span>MFJ Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ======================================
+           DASHBOARD TAB
+           ====================================== -->
+      <div id="tab-dashboard" class="panel active">
+        <!-- Hero -->
+        <div class="hero fade-up">
+          <div class="hero-inner">
+            <div class="hero-text">
+              <div class="hero-dua">﷽ — اللّٰهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ</div>
+              <h2>MFJ Services CRM</h2>
+              <p>Tax & Business Solutions — Professional Client Management</p>
+              <div class="hero-tags">
+                <span class="hero-tag">Income Tax</span>
+                <span class="hero-tag">NTN</span>
+                <span class="hero-tag">Sales Tax</span>
+                <span class="hero-tag">Business Registration</span>
+              </div>
+            </div>
+            <div class="hero-actions">
+              <button class="hero-btn solid" onclick="showTabByName('add')">➕ نیا کلائنٹ</button>
+              <button class="hero-btn ghost" onclick="showTabByName('msg')">📨 میسیج</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid fade-up" id="statsGrid"></div>
+
+        <!-- Quick Actions -->
+        <div class="section-head">
+          <h3>⚡ فوری کارروائیاں</h3>
+        </div>
+        <div class="quick-grid" style="margin-bottom:24px;">
+          <button class="quick-card" onclick="showTabByName('add')"><div class="quick-ic">➕</div><span>نیا کلائنٹ</span></button>
+          <button class="quick-card" onclick="showTabByName('referral')"><div class="quick-ic">🌳</div><span>ریفرل ٹیم</span></button>
+          <button class="quick-card" onclick="showTabByName('msg')"><div class="quick-ic">💬</div><span>WhatsApp</span></button>
+          <button class="quick-card" onclick="showTabByName('clients')"><div class="quick-ic">🔍</div><span>کلائنٹ تلاش</span></button>
+          <button class="quick-card" onclick="exportCSV()"><div class="quick-ic">📥</div><span>CSV Export</span></button>
+          <button class="quick-card" onclick="showTabByName('analytics')"><div class="quick-ic">📈</div><span>Analytics</span></button>
+        </div>
+
+        <!-- Activity -->
+        <div class="card fade-up">
+          <div class="card-header">
+            <span class="card-title">📊 سرگرمی کا خلاصہ</span>
+          </div>
+          <div id="activitySummary"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           CLIENTS TAB
+           ====================================== -->
+      <div id="tab-clients" class="panel">
+        <div class="section-head">
+          <h3>👥 تمام کلائنٹس</h3>
+          <button class="btn btn-primary btn-sm" onclick="showTabByName('add')">➕ نیا کلائنٹ</button>
+        </div>
+        <div class="search-bar">
+          <input type="text" placeholder="نام، موبائل، CNIC، ای میل، NTN، ریفرنس سے تلاش..." id="searchInput" oninput="renderTable()">
+          <select id="filterStatus" onchange="renderTable()">
+            <option value="">تمام اسٹیٹس</option>
+            <option value="pending">زیرِ التواء</option>
+            <option value="progress">جاری</option>
+            <option value="documents">دستاویزات</option>
+            <option value="submitted">جمع</option>
+            <option value="done">مکمل</option>
+            <option value="paid">ادا شدہ</option>
+          </select>
+          <select id="filterCategory" onchange="renderTable()">
+            <option value="">تمام اقسام</option>
+            <option value="income_tax">Income Tax</option>
+            <option value="ntn">NTN</option>
+            <option value="sales_tax">Sales Tax</option>
+            <option value="business_reg">Business Reg</option>
+            <option value="company_reg">Company Reg</option>
+            <option value="pvt_ltd">Pvt Ltd</option>
+            <option value="import_export">Import/Export</option>
+            <option value="other">دیگر</option>
+          </select>
+          <select id="filterClientType" onchange="renderTable()">
+            <option value="">تمام اقسام</option>
+            <option value="main">مین کلائنٹ</option>
+            <option value="referral">ریفرل کلائنٹ</option>
+          </select>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>نام</th>
+                  <th>موبائل</th>
+                  <th>CNIC</th>
+                  <th>خدمت</th>
+                  <th>اسٹیٹس</th>
+                  <th>نوع</th>
+                  <th>فیس</th>
+                  <th>تاریخ</th>
+                  <th>کارروائی</th>
+                </tr>
+              </thead>
+              <tbody id="clientsTable"></tbody>
+            </table>
+          </div>
+          <div id="tableEmpty" class="empty" style="display:none;">
+            <span class="ic">🔍</span>
+            <p>کوئی کلائنٹ نہیں ملا</p>
+          </div>
+          <div id="tableFooter" style="padding:12px 0;font-size:12.5px;color:var(--text-mute);text-align:center;"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           ADD / EDIT CLIENT TAB
+           ====================================== -->
+      <div id="tab-add" class="panel">
+        <div class="section-head">
+          <h3 id="formHeading">➕ نیا کلائنٹ شامل کریں</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <button class="btn btn-secondary btn-sm" onclick="openCamModal()" title="کیمرے سے CNIC اسکین کریں">📷 CNIC اسکین</button>
+            <button class="btn btn-secondary btn-sm" id="voiceAddBtn" onclick="toggleVoiceInput()" title="آواز سے معلومات درج کریں">🎤 آواز سے</button>
+            <button class="btn btn-secondary btn-sm" onclick="resetForm()">🔄 فارم صاف کریں</button>
+          </div>
+        </div>
+
+        <!-- Voice input status bar -->
+        <div class="voice-bar" id="voiceBar">
+          <div class="voice-dot"></div>
+          <span id="voiceBarText">سنا جا رہا ہے... بولیں</span>
+          <button onclick="stopVoiceInput()" style="margin-right:auto;background:none;border:none;cursor:pointer;color:var(--danger);font-weight:700;">✕ بند کریں</button>
+        </div>
+
+        <div class="card">
+          <p class="card-title" style="margin-bottom:16px;">👤 ذاتی معلومات</p>
+
+          <div class="row">
+            <div class="field">
+              <label>نوع کلائنٹ *</label>
+              <select id="clientType" onchange="toggleReferredByField()">
+                <option value="main">مین کلائنٹ</option>
+                <option value="referral">ریفرل کلائنٹ</option>
+              </select>
+            </div>
+            <div class="field" id="referredByField" style="display:none;">
+              <label>ریفر کرنے والا (مین کلائنٹ) *</label>
+              <select id="referredBy"><option value="">-- منتخب کریں --</option></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field"><label>نام *</label><input type="text" id="name" placeholder="کلائنٹ کا مکمل نام"></div>
+            <div class="field"><label>والد کا نام</label><input type="text" id="fatherName" placeholder="والد کا نام"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>موبائل *</label><input type="tel" id="mobile" placeholder="03xxxxxxxxx"></div>
+            <div class="field"><label>WhatsApp</label><input type="tel" id="whatsapp" placeholder="اگر مختلف ہو"></div>
+            <div class="field"><label>ای میل</label><input type="email" id="email" placeholder="email@example.com"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>CNIC</label><input type="text" id="cnic" placeholder="xxxxx-xxxxxxx-x"></div>
+            <div class="field"><label>NTN</label><input type="text" id="ntn" placeholder="NTN نمبر"></div>
+            <div class="field"><label>ٹیکس سال</label><input type="text" id="taxYear" placeholder="2024-25"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>🎂 سالگرہ کی تاریخ</label><input type="date" id="birthday" placeholder="سالگرہ"></div>
+            <div class="field"><label>جنس</label>
+              <select id="gender">
+                <option value="">منتخب کریں</option>
+                <option value="male">مرد</option>
+                <option value="female">عورت</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="card-title" style="margin-bottom:16px;">📍 پتہ</p>
+          <div class="row">
+            <div class="field"><label>گھر نمبر</label><input type="text" id="houseNo" placeholder="مکان نمبر"></div>
+            <div class="field"><label>گلی</label><input type="text" id="street" placeholder="گلی کا نام"></div>
+            <div class="field"><label>علاقہ</label><input type="text" id="area" placeholder="محلہ/علاقہ"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>شہر</label><input type="text" id="city" placeholder="شہر"></div>
+            <div class="field"><label>ضلع</label><input type="text" id="district" placeholder="ضلع"></div>
+            <div class="field"><label>صوبہ</label>
+              <select id="province">
+                <option value="">منتخب کریں</option>
+                <option value="Punjab">پنجاب</option>
+                <option value="Sindh">سندھ</option>
+                <option value="KPK">خیبر پختونخوا</option>
+                <option value="Balochistan">بلوچستان</option>
+                <option value="AJK">آزاد جموں و کشمیر</option>
+                <option value="GB">گلگت بلتستان</option>
+                <option value="ICT">اسلام آباد</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field"><label>مکمل پتہ</label><textarea id="fullAddress" rows="2" placeholder="مکمل پتہ لکھیں"></textarea></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="card-title" style="margin-bottom:16px;">💼 خدمت اور ذریعہ</p>
+          <div class="row">
+            <div class="field"><label>خدمت کی قسم *</label>
+              <select id="category">
+                <option value="income_tax">Income Tax Return</option>
+                <option value="ntn">NTN Registration</option>
+                <option value="sales_tax">Sales Tax</option>
+                <option value="business_reg">Business Registration</option>
+                <option value="company_reg">Company Registration</option>
+                <option value="pvt_ltd">Pvt Ltd Company</option>
+                <option value="import_export">Import/Export License</option>
+                <option value="other">دیگر</option>
+              </select>
+            </div>
+            <div class="field"><label>ذریعہ</label>
+              <select id="source" onchange="toggleReferenceField()">
+                <option value="direct">Direct Contact</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="facebook">Facebook</option>
+                <option value="google">Google Search</option>
+                <option value="referral">Referral</option>
+                <option value="friend">دوست</option>
+                <option value="family">خاندان</option>
+                <option value="existing_client">موجودہ کلائنٹ</option>
+                <option value="business_ref">Business Reference</option>
+                <option value="other">دیگر</option>
+              </select>
+            </div>
+            <div class="field" id="referenceNameField" style="display:none;"><label>ریفرنس کا نام</label><input type="text" id="referenceName" placeholder="ریفر کرنے والے کا نام"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label>فیس (روپے)</label><input type="number" id="fee" placeholder="0"></div>
+            <div class="field"><label>اسٹیٹس</label>
+              <select id="status">
+                <option value="pending">زیرِ التواء</option>
+                <option value="progress">جاری</option>
+                <option value="documents">دستاویزات</option>
+                <option value="submitted">جمع شدہ</option>
+                <option value="done">مکمل</option>
+                <option value="paid">ادا شدہ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="card-title" style="margin-bottom:16px;">📄 دستاویزات چیک لسٹ</p>
+          <div id="docChecklistArea"></div>
+        </div>
+
+        <div class="card">
+          <p class="card-title" style="margin-bottom:16px;">🔔 فالو اپ</p>
+          <div class="row">
+            <div class="field"><label>فالو اپ تاریخ</label><input type="date" id="followUpDate"></div>
+            <div class="field"><label>فالو اپ نوٹ</label><input type="text" id="followUpNote" placeholder="فالو اپ کی وجہ"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="card-title" style="margin-bottom:12px;">📝 پاس ورڈ (اختیاری)</p>
+          <div class="row">
+            <div class="field">
+              <label>IRIS / FBR پاس ورڈ</label>
+              <div class="pw-field-wrap">
+                <input type="password" id="irisPass" placeholder="IRIS password" class="pw-masked">
+                <button class="pw-action-btn" onclick="toggleFieldPw('irisPass')">👁</button>
+                <button class="pw-action-btn" onclick="genPassword('irisPass')">🎲</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Email پاس ورڈ</label>
+              <div class="pw-field-wrap">
+                <input type="password" id="emailPass" placeholder="Email password" class="pw-masked">
+                <button class="pw-action-btn" onclick="toggleFieldPw('emailPass')">👁</button>
+                <button class="pw-action-btn" onclick="genPassword('emailPass')">🎲</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="card-title" style="margin-bottom:12px;">💬 نوٹ</p>
+          <div class="row">
+            <div class="field"><textarea id="note" rows="3" placeholder="اضافی معلومات یا نوٹ"></textarea></div>
+          </div>
+        </div>
+
+        <input type="hidden" id="editId">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="saveClient()">💾 محفوظ کریں</button>
+          <button class="btn btn-secondary" onclick="resetForm()">🔄 صاف کریں</button>
+          <button class="btn btn-secondary" onclick="showTabByName('clients')">👥 فہرست دیکھیں</button>
+        </div>
+      </div>
+
+      <!-- ======================================
+           REFERRAL NETWORK TAB
+           ====================================== -->
+      <div id="tab-referral" class="panel">
+        <div class="section-head">
+          <h3>🌳 ریفرل نیٹ ورک</h3>
+          <div style="display:flex;gap:8px;">
+            <input type="text" placeholder="مین کلائنٹ تلاش..." id="referralSearch" oninput="renderReferralNetwork()" class="search-mini" style="min-width:180px;border-radius:30px;padding:7px 14px;">
+          </div>
+        </div>
+
+        <!-- Referral KPIs -->
+        <div class="kpi-grid" id="referralKPIs" style="margin-bottom:20px;"></div>
+
+        <!-- Referral List -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">👥 مین کلائنٹس اور ان کے ریفرلز</span>
+          </div>
+          <div id="referralNetworkList"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           REFERRAL TREE VIEW TAB
+           ====================================== -->
+      <div id="tab-referral-tree" class="panel">
+        <div class="section-head">
+          <h3>🔗 ریفرل ٹری ویو</h3>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">مین کلائنٹ منتخب کریں</span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <select id="treeClientSelect" onchange="renderReferralTree()">
+                <option value="">-- مین کلائنٹ منتخب کریں --</option>
+              </select>
+            </div>
+          </div>
+          <div id="referralTreeView" class="referral-tree"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           WHATSAPP MESSAGE TAB
+           ====================================== -->
+      <div id="tab-msg" class="panel">
+        <div class="section-head"><h3>💬 WhatsApp میسیج</h3></div>
+        <div class="notice">📌 ایک کلائنٹ کو میسیج بھیجیں یا تمام/منتخب کلائنٹس کو بلک میسیج کریں</div>
+
+        <!-- ── Single Message ── -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">📨 ایک کلائنٹ کو میسیج</span></div>
+          <div class="row">
+            <div class="field"><label>نام</label><input type="text" id="msgName" placeholder="کلائنٹ کا نام"></div>
+            <div class="field"><label>نمبر</label><input type="tel" id="msgNum" placeholder="WhatsApp نمبر"></div>
+          </div>
+          <div class="field" style="margin-bottom:12px;"><label>پیغام</label><textarea id="msgText" rows="4" placeholder="پیغام لکھیں..."></textarea></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+            <button class="tag-btn" onclick="insertTag('[نام]')">نام</button>
+            <button class="tag-btn" onclick="insertTag('[سروس]')">سروس</button>
+            <button class="tag-btn" onclick="insertTag('[فیس]')">فیس</button>
+            <button class="tag-btn" onclick="insertTag('[تاریخ]')">تاریخ</button>
+          </div>
+          <a id="waLink" href="#" target="_blank" class="btn btn-success">📱 WhatsApp کھولیں</a>
+          <button class="btn btn-secondary" onclick="updateWALink()" style="margin-right:8px;">🔄 لنک اپ ڈیٹ</button>
+        </div>
+
+        <!-- ── BULK MESSAGE ── -->
+        <div class="card" style="border:1.5px solid rgba(37,99,235,.2);box-shadow:0 4px 24px rgba(37,99,235,.08);">
+          <div class="card-header">
+            <span class="card-title">🚀 بلک میسیج — تمام/منتخب کلائنٹس</span>
+            <span id="bulkCount" style="font-size:12px;color:var(--primary);font-weight:700;background:var(--primary-ultra);padding:4px 12px;border-radius:20px;border:1px solid var(--primary-mid);">0 منتخب</span>
+          </div>
+
+          <!-- Filters -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:14px;">
+            <div class="field">
+              <label>اسٹیٹس فلٹر</label>
+              <select id="bulkFilterStatus" onchange="renderBulkList()">
+                <option value="">تمام اسٹیٹس</option>
+                <option value="pending">زیرِ التواء</option>
+                <option value="progress">جاری</option>
+                <option value="documents">دستاویزات</option>
+                <option value="submitted">جمع</option>
+                <option value="done">مکمل</option>
+                <option value="paid">ادا شدہ</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>خدمت فلٹر</label>
+              <select id="bulkFilterCat" onchange="renderBulkList()">
+                <option value="">تمام خدمات</option>
+                <option value="income_tax">Income Tax</option>
+                <option value="ntn">NTN</option>
+                <option value="sales_tax">Sales Tax</option>
+                <option value="business_reg">Business Reg</option>
+                <option value="other">دیگر</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>نوع فلٹر</label>
+              <select id="bulkFilterType" onchange="renderBulkList()">
+                <option value="">تمام</option>
+                <option value="main">مین کلائنٹ</option>
+                <option value="referral">ریفرل کلائنٹ</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Bulk Message Template -->
+          <div class="field" style="margin-bottom:12px;">
+            <label>بلک پیغام ٹیمپلیٹ</label>
+            <textarea id="bulkMsgText" rows="4" placeholder="پیغام لکھیں... [نام] لکھنے سے ہر کلائنٹ کا نام خود بخود آئے گا"></textarea>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+            <button class="tag-btn" onclick="insertBulkTag('[نام]')">نام</button>
+            <button class="tag-btn" onclick="insertBulkTag('[سروس]')">سروس</button>
+            <button class="tag-btn" onclick="insertBulkTag('[فیس]')">فیس</button>
+            <button class="tag-btn" onclick="insertBulkTag('[اسٹیٹس]')">اسٹیٹس</button>
+            <button class="tag-btn" onclick="setBulkTemplate('welcome')">خوش آمدید</button>
+            <button class="tag-btn" onclick="setBulkTemplate('fee')">فیس یاددہانی</button>
+            <button class="tag-btn" onclick="setBulkTemplate('done')">مکمل</button>
+            <button class="tag-btn" onclick="setBulkTemplate('referral')">ریفرل</button>
+          </div>
+
+          <!-- Select All / Actions -->
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="bulkSelectAll()">☑ سب منتخب کریں</button>
+            <button class="btn btn-secondary btn-sm" onclick="bulkSelectNone()">☐ سب ہٹائیں</button>
+            <button class="btn btn-primary btn-sm" onclick="startBulkSend()" id="bulkSendBtn">📤 بلک میسیج شروع کریں</button>
+          </div>
+
+          <!-- Client List -->
+          <div id="bulkClientList" style="max-height:380px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius-sm);"></div>
+
+          <!-- Progress -->
+          <div id="bulkProgress" style="display:none;margin-top:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-soft);margin-bottom:6px;">
+              <span>پیش رفت</span>
+              <span id="bulkProgressText">0 / 0</span>
+            </div>
+            <div style="height:8px;background:var(--surface2);border-radius:8px;overflow:hidden;">
+              <div id="bulkProgressBar" style="height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));border-radius:8px;width:0%;transition:width .3s ease;"></div>
+            </div>
+            <div id="bulkProgressStatus" style="font-size:12px;color:var(--text-mute);margin-top:8px;text-align:center;"></div>
+          </div>
+        </div>
+
+        <!-- Templates -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">📋 پیغام ٹیمپلیٹس</span></div>
+          <div id="msgTemplates"></div>
+        </div>
+
+        <!-- Follow Up List -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">📞 فالو اپ فہرست</span></div>
+          <div id="followUpList"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           ANALYTICS TAB
+           ====================================== -->
+      <div id="tab-analytics" class="panel">
+        <div class="section-head"><h3>📈 Analytics ڈیش بورڈ</h3></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;">
+          <div class="card">
+            <div class="card-header"><span class="card-title">📊 ماہانہ کلائنٹس</span></div>
+            <div class="chart-wrap"><div class="bar-chart" id="monthlyChart"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">💰 ماہانہ آمدن</span></div>
+            <div class="chart-wrap"><div class="bar-chart" id="revenueChart"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📂 خدمات کی تقسیم</span></div>
+            <div class="pie-wrap" id="categoryChart"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">🌳 ریفرل گروتھ</span></div>
+            <div class="chart-wrap"><div class="bar-chart" id="referralChart"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📡 ذریعہ تجزیہ</span></div>
+            <div class="pie-wrap" id="sourceChart"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">⭐ ٹاپ ریفررز</span></div>
+            <div id="topReferrersChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           REPORTS TAB
+           ====================================== -->
+      <div id="tab-reports" class="panel">
+        <div class="section-head"><h3>📋 رپورٹس</h3></div>
+        <div id="reportsGrid" class="report-grid"></div>
+      </div>
+
+      <!-- ======================================
+           FOLLOW UP TAB
+           ====================================== -->
+      <div id="tab-followup" class="panel">
+        <div class="section-head"><h3>🔔 فالو اپ ریمائنڈرز</h3></div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">⚠️ واجب الادا فالو اپ</span></div>
+          <div id="overdueFollowups"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">📅 آنے والے فالو اپ</span></div>
+          <div id="upcomingFollowups"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           DATA MANAGEMENT TAB
+           ====================================== -->
+      <!-- ══════════════ MEDIA LIBRARY TAB ══════════════ -->
+      <div id="tab-media" class="panel">
+        <div class="section-head"><h3>🖼️ میڈیا لائبریری</h3>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('mediaFileInput').click()">➕ فائل شامل کریں</button>
+        </div>
+        <input type="file" id="mediaFileInput" multiple accept="image/*,video/*,.pdf" style="display:none" onchange="handleMediaUpload(event)">
+
+        <!-- Upload zone -->
+        <div class="media-upload-zone" id="mediaDropZone"
+             onclick="document.getElementById('mediaFileInput').click()"
+             ondragover="event.preventDefault();this.classList.add('drag-over')"
+             ondragleave="this.classList.remove('drag-over')"
+             ondrop="handleMediaDrop(event)">
+          <div class="upload-icon">📤</div>
+          <p>یہاں فائل drag & drop کریں یا کلک کریں</p>
+          <small>تصاویر (JPG, PNG, GIF, WebP) • ویڈیوز (MP4, MOV) • PDF پوسٹرز</small>
+        </div>
+
+        <!-- Stats -->
+        <div class="media-stats" id="mediaStats"></div>
+
+        <!-- Filter bar -->
+        <div class="media-filter-bar">
+          <span style="font-size:13px;color:var(--text-soft);font-weight:600;">فلٹر:</span>
+          <button class="media-filter-btn active" data-filter="all"    onclick="filterMedia('all',this)">🗂 سب</button>
+          <button class="media-filter-btn"         data-filter="image"  onclick="filterMedia('image',this)">🖼️ تصاویر</button>
+          <button class="media-filter-btn"         data-filter="video"  onclick="filterMedia('video',this)">🎬 ویڈیوز</button>
+          <button class="media-filter-btn"         data-filter="pdf"    onclick="filterMedia('pdf',this)">📄 PDF</button>
+          <button class="btn btn-ghost btn-sm" style="margin-right:auto;" onclick="clearAllMedia()">🗑 سب حذف کریں</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="media-grid" id="mediaGrid"></div>
+      </div>
+
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <div class="lightbox-inner" id="lightboxInner"></div>
+      </div>
+
+      <!-- ══════════════ DATA TAB ══════════════ -->
+      <div id="tab-data" class="panel">
+        <div class="section-head"><h3>💾 ڈیٹا مینجمنٹ</h3></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+          <div class="card">
+            <div class="card-header"><span class="card-title">📥 Export</span></div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <button class="btn btn-primary" onclick="exportCSV()">📊 CSV ڈاؤنلوڈ</button>
+              <button class="btn btn-secondary" onclick="exportJSON()">💾 JSON بیک اپ</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📤 Import</span></div>
+            <div class="field"><label>JSON فائل منتخب کریں</label><input type="file" id="importFile" accept=".json"></div>
+            <button class="btn btn-primary" onclick="importJSON()" style="margin-top:8px;">📂 امپورٹ کریں</button>
+            <div id="importMsg" style="margin-top:8px;font-size:12.5px;"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">⚠️ ڈیٹا صاف کریں</span></div>
+            <p style="font-size:13px;color:var(--text-soft);margin-bottom:12px;">تمام کلائنٹ ڈیٹا حذف ہو جائے گا۔ یہ عمل واپس نہیں ہو سکتا۔</p>
+            <button class="btn btn-danger" onclick="clearAll()">🗑 تمام ڈیٹا حذف کریں</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           INVOICE TAB
+           ====================================== -->
+      <div id="tab-invoice" class="panel">
+        <div class="section-head">
+          <h3>🧾 Invoice / رسید بنائیں</h3>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;" class="invoice-layout">
+          <!-- Invoice Form -->
+          <div class="card">
+            <div class="card-header"><span class="card-title">📝 تفصیلات</span></div>
+            <div class="field" style="margin-bottom:12px;">
+              <label>کلائنٹ منتخب کریں</label>
+              <select id="invClientSel" onchange="autoFillInvoice(th
